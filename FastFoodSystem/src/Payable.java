@@ -1,4 +1,4 @@
 public interface Payable {
-    void processPayment();
-    void issueRefund();
+    void processPayment(double amount);
+    void issueRefund(double amount);
 }
