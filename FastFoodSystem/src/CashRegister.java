@@ -1,14 +1,9 @@
-import java.util.ArrayList;
-
 public class CashRegister implements Payable{
     
-    private static ArrayList<CashRegister> registers;
-
     private boolean inUse;
 
-    public CashRegister(int id, double cashBalance) {
+    public CashRegister() {
         this.inUse = false;
-        registers.add(this);
     }
 
     //Will be used when customer orders food
