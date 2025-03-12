@@ -1,18 +1,25 @@
 public class Customer extends Person implements Payable{
     
     CashRegister registerToUse;
+    double balance;
 
-    public Customer(int id, String name, boolean isWorking, String position, double payRate, int hoursWorked) {
+    public Customer(int id, String name, boolean isWorking, double balance) {
         super(name, isWorking, id);
+        this.balance = balance;
     }
 
     //Customer can choose a register to use. Once in use, no other customer can use that register until the customer has placed an order
-    public void useRegister(int registerNumber) {
-        this.registerToUse = CashRegister.useRegister(registerNumber);
+    public void useRegister(CashRegister register) {
+        if(!register.getInUse()) {
+            register.setInUse(true);
+            this.registerToUse = register;
+        } else {
+            System.out.println("Error: Register is already in use");
+        }
     }
 
     public void displayInfo() {
-
+        
     }
 
     //When customer orders food
