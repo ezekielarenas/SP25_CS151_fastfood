@@ -25,14 +25,15 @@ public class App {
             "\nType 'MENU' to return to menu or 'QUIT' to exit application\n" + 
             "1. Setup a cash register\n" +
             "2. Have a customer enter the store\n" + //(Creating a customer object)
-            "3. Have a customer use a register to order" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
-            "4. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
-            "5. Have an employee serve a customer\n" + //If inventory stock is insufficient, the operation fails
-            "6. View inventory\n" + 
-            "7. View employees\n" +
-            "8. View registers\n" +
-            "9. View current orders\n" +
-            "10. Restock inventory" 
+            "3. Have a customer go to a register\n" + //A customer must be at a register before being able to order
+            "4. Have customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
+            "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
+            "6. Have an employee serve a customer\n" + //If inventory stock is insufficient, the operation fails
+            "7. View inventory\n" + 
+            "8. View employees\n" +
+            "9. View registers\n" +
+            "10. View current orders\n" +
+            "11. Restock inventory" 
         );
     }
 
@@ -91,6 +92,8 @@ public class App {
                 case "9":
                     break;
                 case "10":
+                    break;
+                case "11":
                     break;
                 default:
                     System.out.println("Invalid input");
