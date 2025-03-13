@@ -1,11 +1,13 @@
 public class Customer extends Person implements Payable{
     
-    CashRegister registerToUse;
-    double balance;
+    private CashRegister registerToUse;
+    private double balance;
+    private boolean isWaitingOnOrder; 
 
     public Customer(int id, String name, boolean isWorking, double balance) {
         super(name, isWorking, id);
         this.balance = balance;
+        this.isWaitingOnOrder = false;
     }
 
     //Customer can choose a register to use. Once in use, no other customer can use that register until the customer has placed an order
@@ -17,6 +19,10 @@ public class Customer extends Person implements Payable{
             System.out.println("Error: Register is already in use");
         }
     }
+
+    // public void placeOrder() {
+    //     registerToUse.setInUse(false);
+    // }
 
     public void displayInfo() {
         
