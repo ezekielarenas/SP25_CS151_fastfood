@@ -20,9 +20,13 @@ public class Customer extends Person implements Payable{
         }
     }
 
-    // public void placeOrder() {
-    //     registerToUse.setInUse(false);
-    // }
+    public void placeOrder() {
+        if(registerToUse != null) {
+            this.isWaitingOnOrder = true;
+        } else {
+            System.out.println("Couldn't place order, customer is not at a register");;
+        }
+    }
 
     public void displayInfo() {
         
