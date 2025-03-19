@@ -1,4 +1,4 @@
-package MenuItems;
+package menu;
 
 public class Burger extends MenuItem  {
 	public Burger() { 

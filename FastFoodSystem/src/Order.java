@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import menu.MenuItem;
+
 public class Order implements Reportable {
     private int orderId;
     private Customer customer;

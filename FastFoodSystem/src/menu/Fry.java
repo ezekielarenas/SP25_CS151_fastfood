@@ -1,4 +1,4 @@
-package MenuItems;
+package menu;
 
 public class Fry extends MenuItem {
 	public Fry() {

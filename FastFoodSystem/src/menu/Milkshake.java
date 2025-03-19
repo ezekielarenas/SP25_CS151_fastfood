@@ -1,4 +1,4 @@
-package MenuItems;
+package menu;
 
 public class Milkshake extends MenuItem {
 	public Milkshake() {
