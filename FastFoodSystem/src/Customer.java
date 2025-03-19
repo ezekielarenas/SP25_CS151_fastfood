@@ -21,9 +21,14 @@ public class Customer extends Person implements Payable{
     }
 
     public void placeOrder(Order order) {
+
         if(registerToUse != null) {
-            processPayment(order.calculateTotal());
-            this.isWaitingOnOrder = true;
+            //Once order is placed, register is freed to be used whether the transaction worked or not
+            registerToUse.setInUse(false); 
+            registerToUse = null;
+            if(processPayment(order.calculateTotal())) {
+                this.isWaitingOnOrder = true;
+            } 
         } else {
             System.out.println("Couldn't place order, customer is not at a register");;
         }
@@ -34,8 +39,13 @@ public class Customer extends Person implements Payable{
     }
 
     //When customer orders food
-    public void processPayment(double amount) {
-        
+    public boolean processPayment(double amount) {
+        if(balance < amount) {
+            System.out.println("Insufficient balance.");
+            return false;
+        }
+        balance -= amount;
+        return true;
     }
 
     public void issueRefund(double amount) {

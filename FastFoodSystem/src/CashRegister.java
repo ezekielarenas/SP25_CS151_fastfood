@@ -7,8 +7,8 @@ public class CashRegister implements Payable{
     }
 
     //Will be used when customer orders food
-    public void processPayment(double amount) {
-
+    public boolean processPayment(double amount) {
+        return false;
     }
 
     public void issueRefund(double amount) {
