@@ -14,5 +14,8 @@ abstract class Person {
 
     public abstract void displayInfo();
 
+    public String getName() {
+        return name;
+    }
 }
 

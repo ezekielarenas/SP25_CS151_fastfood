@@ -1,6 +1,9 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
+import MenuItems.Fry;
+import MenuItems.Milkshake;
+
 public class App {
 
     private static Scanner scanner = new Scanner(System.in);
@@ -20,13 +23,13 @@ public class App {
         return input;
     }
 
-    public static void printMenu() {
+    public static void printUI() {
         System.out.println(
             "\nType 'MENU' to return to menu or 'QUIT' to exit application\n" + 
             "1. Setup a cash register\n" +
             "2. Have a customer enter the store\n" + //(Creating a customer object)
             "3. Have a customer go to a register\n" + //A customer must be at a register before being able to order
-            "4. Have customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
+            "4. Have a customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
             "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
             "6. Have an employee serve a customer\n" + //If inventory stock is insufficient, the operation fails
             "7. View inventory\n" + 
@@ -37,14 +40,23 @@ public class App {
         );
     }
 
+    public static void printMenu() {
+        System.out.println(
+            "MENU\n" +
+            "1. Burger - $4.25\n" +
+            "2. Fry - 2.75\n" + 
+            "3. Milkshake 6.25\n" 
+        );
+    }
+
     public static void main(String[] args) throws Exception {
 
         System.out.println("\n\n***********Fast Food Operation Simulation***********");
-        printMenu();
+        printUI();
 
         HashMap<Integer, Customer> customerList = new HashMap<>();
         HashMap<Integer, CashRegister> registerList = new HashMap<>();
-
+        HashMap<Integer, Employee> employeeList = new HashMap<>();
 
         while(true) {
             String input = getInput("");
@@ -67,11 +79,10 @@ public class App {
                     }
                     String customerName = getInput("Enter customer name: ");
                     double customerBalance = Double.parseDouble(getInput("What is this customer's balance?: "));
-
                     customerList.put(customerID, new Customer(customerID, customerName, false, customerBalance));
                     break;
                 case "3":
-                    int selectedCustomerID = Integer.valueOf(getInput("Which customer will use a register?"));
+                    int selectedCustomerID = Integer.valueOf(getInput("Which customer will use a register? (Enter customer ID)"));
                     if(customerList.containsKey(selectedCustomerID)) {
                         int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerList.get(selectedCustomerID).name + " use?:"));
                         customerList.get(selectedCustomerID).useRegister(registerList.get(registerToBeUsedID));
@@ -79,9 +90,45 @@ public class App {
                         System.out.println("Error: Invalid ID");
                     }
                     break;
+
+
                 case "4":
+
+                    int orderingCustomerID = Integer.valueOf(getInput("Which customer will order? (Enter customer ID)"));
+
+                    if(customerList.containsKey(orderingCustomerID)) {
+                        printMenu();
+                        System.out.println("What will " + customerList.containsKey(orderingCustomerID) + " order? (Enter 1-3, type anything else to exit)");
+                        Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
+                        while(true) {
+                            int option = Integer.valueOf(getInput("Add item: "));
+                            if(option == 1) {
+                                order.addItem(new Burger());
+                            } else if(option == 2) {
+                                order.addItem(new Fry());
+                            } else if(option == 3) {
+                                order.addItem(new Milkshake());
+                            } else {
+                                customerList.get(orderingCustomerID).placeOrder(order);
+                                order.generateReport();
+                                break;
+                            }
+                        }
+                        
+                    } else {
+                        System.out.println("Error: Invalid ID");
+                    }
                     break;
+
+
                 case "5":
+                    int employeeID = Integer.valueOf(getInput("Enter employee ID: "));
+                    if(employeeList.containsKey(employeeID)) {
+                        System.out.println("Error: Duplicate ID");
+                        break;
+                    }
+                    String employeeName = getInput("Enter employee name: ");
+                    employeeList.put(employeeID, new Employee(employeeID, employeeName, true, "", 0, 0));
                     break;
                 case "6":
                     break;
@@ -100,7 +147,7 @@ public class App {
                     break;
 
             }
-            printMenu();
+            printUI();
         }
     }
 }
