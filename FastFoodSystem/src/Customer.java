@@ -23,12 +23,13 @@ public class Customer extends Person implements Payable{
     public void placeOrder(Order order) {
 
         if(registerToUse != null) {
-            //Once order is placed, register is freed to be used whether the transaction worked or not
-            registerToUse.setInUse(false); 
-            registerToUse = null;
             if(processPayment(order.calculateTotal())) {
                 this.isWaitingOnOrder = true;
+                registerToUse.processPayment(order.calculateTotal());
+                registerToUse.setInUse(false); 
+                registerToUse = null;
             } 
+            //Once order is placed, register is freed to be used whether the transaction worked or not
         } else {
             System.out.println("Couldn't place order, customer is not at a register");;
         }
