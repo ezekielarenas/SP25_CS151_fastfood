@@ -1,4 +1,4 @@
-package MenuItems;
+package menu;
 
 public abstract class MenuItem {
 private double Price;

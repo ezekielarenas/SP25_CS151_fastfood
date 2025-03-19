@@ -1,8 +1,9 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-import MenuItems.Fry;
-import MenuItems.Milkshake;
+import menu.Fry;
+import menu.Milkshake;
+import menu.Burger;
 
 public class App {
 
