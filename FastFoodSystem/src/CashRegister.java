@@ -15,7 +15,7 @@ public class CashRegister implements Payable{
     }
 
     public void issueRefund(double amount) {
-
+        
     }
 
     public void setInUse(boolean inUse) {

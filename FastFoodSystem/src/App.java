@@ -100,15 +100,16 @@ public class App {
 
                     if(customerList.containsKey(orderingCustomerID)) {
                         printMenu();
-                        System.out.println("What will " + customerList.containsKey(orderingCustomerID) + " order? (Enter 1-3, type anything else to exit)");
+                        System.out.println("What will " + customerList.get(orderingCustomerID).getName() + " order? (Enter 1-3, type anything else to exit)");
                         Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
                         while(true) {
-                            int option = Integer.valueOf(getInput("Add item: "));
-                            if(option == 1) {
+                        
+                            String option = getInput("Add item: ");
+                            if(option.equals("1")) {
                                 order.addItem(new Burger());
-                            } else if(option == 2) {
+                            } else if(option.equals("2")) {
                                 order.addItem(new Fry());
-                            } else if(option == 3) {
+                            } else if(option.equals("3")) {
                                 order.addItem(new Milkshake());
                             } else {
                                 customerList.get(orderingCustomerID).placeOrder(order);
