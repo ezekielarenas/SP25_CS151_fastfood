@@ -6,4 +6,8 @@ public class Burger extends MenuItem  {
 		super.setVegetarian(false);
 		super.setDrinkable(false);
 	}
+
+	public String getName() {
+		return "Burger";
+	}
 }

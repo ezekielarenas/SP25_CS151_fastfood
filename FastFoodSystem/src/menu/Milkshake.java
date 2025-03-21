@@ -6,4 +6,7 @@ public class Milkshake extends MenuItem {
 		super.setVegetarian(true);
 		super.setDrinkable(true);
 	}
+	public String getName() {
+		return "Milkshake";
+	}
 }

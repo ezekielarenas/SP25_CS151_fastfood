@@ -7,4 +7,7 @@ public class Fry extends MenuItem {
 		super.setDrinkable(false);
 	}
 
+	public String getName() {
+		return "Fry";
+	}
 }

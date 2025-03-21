@@ -46,6 +46,7 @@ public class Customer extends Person implements Payable{
             return false;
         }
         balance -= amount;
+        registerToUse.processPayment(amount);
         return true;
     }
 

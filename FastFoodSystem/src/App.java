@@ -10,17 +10,14 @@ public class App {
     private static Scanner scanner = new Scanner(System.in);
 
     //Centralized user input so that program can quit whenever
-    //
     public static String getInput(String message) {
         System.out.println(message);
         String input = scanner.nextLine();
-
         if(input.equals("QUIT")) {
             System.out.println("Exiting...");
             scanner.close();
             System.exit(0);
         }
-
         return input;
     }
 
@@ -70,7 +67,6 @@ public class App {
                         System.out.println("Error: Duplicate ID");
                         break;
                     }
-
                     registerList.put(registerId, new CashRegister());
                     break;
                 case "2":
@@ -92,12 +88,8 @@ public class App {
                         System.out.println("Error: Invalid ID");
                     }
                     break;
-
-
                 case "4":
-
                     int orderingCustomerID = Integer.valueOf(getInput("Which customer will order? (Enter customer ID)"));
-
                     if(customerList.containsKey(orderingCustomerID) ) {
                         if(customerList.get(orderingCustomerID).getRegister() == null) {
                             System.out.println("Error: Customer is not at a register");
@@ -107,7 +99,6 @@ public class App {
                         System.out.println("What will " + customerList.get(orderingCustomerID).getName() + " order? (Enter 1-3, type anything else to exit)");
                         Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
                         while(true) {
-                        
                             String option = getInput("Add item: ");
                             if(option.equals("1")) {
                                 order.addItem(new Burger());
@@ -126,8 +117,6 @@ public class App {
                         System.out.println("Error: Invalid ID");
                     }
                     break;
-
-
                 case "5":
                     int employeeID = Integer.valueOf(getInput("Enter employee ID: "));
                     if(employeeList.containsKey(employeeID)) {

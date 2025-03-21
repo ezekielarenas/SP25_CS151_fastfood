@@ -46,8 +46,7 @@ public class Order implements Reportable {
 
         System.out.println("Items Ordered:");
         for (MenuItem item : items) {
-            System.out.println("Test");
-            //System.out.println("- " + item.getName() + " ($" + item.getPrice() + ")");
+            System.out.println("- " + item.getName() + " ($" + item.getPrice() + ")");
         }
         System.out.println("Calculated Total: $" + calculateTotal());
         System.out.println("Amount Paid: $" + amountPaid);
