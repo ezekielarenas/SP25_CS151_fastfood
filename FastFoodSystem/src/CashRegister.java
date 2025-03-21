@@ -14,7 +14,10 @@ public class CashRegister implements Payable{
     }
 
     public void issueRefund(double amount) {
-
+        totalSales -= amount;
+        if(totalSales < amount) {
+            System.out.println("Total sales are in the negatives, uh oh");
+        }
     }
 
     public void setInUse(boolean inUse) {

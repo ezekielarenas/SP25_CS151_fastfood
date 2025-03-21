@@ -3,6 +3,7 @@ public class Customer extends Person implements Payable{
     private CashRegister registerToUse;
     private double balance;
     private boolean isWaitingOnOrder; 
+    private Order currentOrder;
 
     public Customer(int id, String name, boolean isWorking, double balance) {
         super(name, isWorking, id);
@@ -26,6 +27,7 @@ public class Customer extends Person implements Payable{
     public void placeOrder(Order order) {
 
         if(processPayment(order.calculateTotal())) {
+            currentOrder = order;
             this.isWaitingOnOrder = true;
             registerToUse.processPayment(order.calculateTotal());
             order.generateReport();
@@ -51,10 +53,19 @@ public class Customer extends Person implements Payable{
     }
 
     public void issueRefund(double amount) {
-
+        System.out.println("Order refunded");
+        balance += amount;
+        registerToUse.issueRefund(amount);
+        registerToUse.setInUse(false); 
+        registerToUse = null;
+        currentOrder = null;
     }
 
     public CashRegister getRegister() {
         return registerToUse;
+    }
+
+    public Order getCurrentOrder() {
+        return currentOrder;
     }
 }

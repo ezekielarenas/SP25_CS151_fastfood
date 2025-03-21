@@ -29,9 +29,9 @@ public class App {
             "3. Have a customer go to a register\n" + //A customer must be at a register before being able to order
             "4. Have a customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
             "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
-            "6. Have an employee serve a customer\n" //If inventory stock is insufficient, the operation fails
+            "6. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
             //Feel free to change these next options
-            // "7. View inventory\n" + 
+            "7. View inventory\n" 
             // "8. View employees\n" +
             // "9. View registers\n" +
             // "10. View current orders\n" +
@@ -95,6 +95,10 @@ public class App {
                             System.out.println("Error: Customer is not at a register");
                             break;
                         }
+                        if(customerList.get(orderingCustomerID).getCurrentOrder() != null) {
+                            System.out.println("A customer can only have one order at a time. Refund to make new order");
+                            break;
+                        }
                         printMenu();
                         System.out.println("What will " + customerList.get(orderingCustomerID).getName() + " order? (Enter 1-3, type anything else to exit)");
                         Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
@@ -128,6 +132,20 @@ public class App {
                 case "6":
                     break;
                 case "7":
+                    int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID)"));
+                    if(customerList.containsKey(refundCustomerID) ) {
+                        if(customerList.get(refundCustomerID).getRegister() == null) {
+                            System.out.println("Error: Customer is not at a register");
+                            break;
+                        }
+                        if(customerList.get(refundCustomerID).getCurrentOrder() != null) {
+                            customerList.get(refundCustomerID).issueRefund(customerList.get(refundCustomerID).getCurrentOrder().calculateTotal());
+                        } else {
+                            System.out.println("Error: Customer has no order");
+                        } 
+                    } else {
+                        System.out.println("Error: Invalid ID");
+                    }
                     break;
                 case "8":
                     break;
