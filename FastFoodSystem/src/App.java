@@ -108,7 +108,6 @@ public class App {
                                 order.addItem(new Milkshake());
                             } else {
                                 customerList.get(orderingCustomerID).placeOrder(order);
-                                order.generateReport();
                                 break;
                             }
                         }     
