@@ -98,7 +98,11 @@ public class App {
 
                     int orderingCustomerID = Integer.valueOf(getInput("Which customer will order? (Enter customer ID)"));
 
-                    if(customerList.containsKey(orderingCustomerID)) {
+                    if(customerList.containsKey(orderingCustomerID) ) {
+                        if(customerList.get(orderingCustomerID).getRegister() == null) {
+                            System.out.println("Error: Customer is not at a register");
+                            break;
+                        }
                         printMenu();
                         System.out.println("What will " + customerList.get(orderingCustomerID).getName() + " order? (Enter 1-3, type anything else to exit)");
                         Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
@@ -116,7 +120,7 @@ public class App {
                                 order.generateReport();
                                 break;
                             }
-                        }
+                        }     
                         
                     } else {
                         System.out.println("Error: Invalid ID");

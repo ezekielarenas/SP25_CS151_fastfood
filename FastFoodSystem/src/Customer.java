@@ -12,7 +12,10 @@ public class Customer extends Person implements Payable{
 
     //Customer can choose a register to use. Once in use, no other customer can use that register until the customer has placed an order
     public void useRegister(CashRegister register) {
-        if(!register.getInUse()) {
+        if(register == null) {
+            System.out.println("No register exists");
+        }
+        else if(!register.getInUse()) {
             register.setInUse(true);
             this.registerToUse = register;
         } else {
@@ -22,17 +25,14 @@ public class Customer extends Person implements Payable{
 
     public void placeOrder(Order order) {
 
-        if(registerToUse != null) {
-            if(processPayment(order.calculateTotal())) {
-                this.isWaitingOnOrder = true;
-                registerToUse.processPayment(order.calculateTotal());
-                registerToUse.setInUse(false); 
-                registerToUse = null;
-            } 
-            //Once order is placed, register is freed to be used whether the transaction worked or not
-        } else {
-            System.out.println("Couldn't place order, customer is not at a register");;
-        }
+        if(processPayment(order.calculateTotal())) {
+            this.isWaitingOnOrder = true;
+            registerToUse.processPayment(order.calculateTotal());
+            registerToUse.setInUse(false); 
+            registerToUse = null;
+        } 
+        //Once order is placed, register is freed to be used whether the transaction worked or not
+        
     }
 
     public void displayInfo() {
@@ -51,5 +51,9 @@ public class Customer extends Person implements Payable{
 
     public void issueRefund(double amount) {
 
+    }
+
+    public CashRegister getRegister() {
+        return registerToUse;
     }
 }
