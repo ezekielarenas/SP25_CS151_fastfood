@@ -28,11 +28,11 @@ public class Customer extends Person implements Payable{
         if(processPayment(order.calculateTotal())) {
             this.isWaitingOnOrder = true;
             registerToUse.processPayment(order.calculateTotal());
-            registerToUse.setInUse(false); 
-            registerToUse = null;
+            
         } 
         //Once order is placed, register is freed to be used whether the transaction worked or not
-        
+        registerToUse.setInUse(false); 
+        registerToUse = null;
     }
 
     public void displayInfo() {
