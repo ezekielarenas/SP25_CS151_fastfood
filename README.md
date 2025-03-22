@@ -45,10 +45,10 @@ java App
     - A customer can't use a register that is in use by another customer
 
 4. **Place order**
-    -Choose option 4 to have a customer who is at a register place an order, where they can select items from a menu by entering 1-3. 
-    -Once order is placed, register will become free and Customer's status will be waiting for their order
-    -If a customer already has an order and goes to a register to make another one, they will be prompted to refund their original order
-        -They will still be at the register until refunding is down
+    - Choose option 4 to have a customer who is at a register place an order, where they can select items from a menu by entering 1-3. 
+    - Once order is placed, register will become free and Customer's status will be waiting for their order
+    - If a customer already has an order and goes to a register to make another one, they will be prompted to refund their original order
+        - They will still be at the register until refunding is done
 
 5. **Create employee**
 
@@ -65,6 +65,6 @@ java App
 
 ## Contributions
 
--Jason Palomino
+- Jason Palomino
     - Implemented Customer and Cash Register class.
     - Implemented interaction between Customer and Registers in main method.
