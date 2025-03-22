@@ -14,7 +14,7 @@ public class Employee extends Person{
     public Employee(int id, String name, boolean isWorking, String position, double payRate, int hoursWorked) {
         super(name, isWorking, id);
         if(objectCount >= MAX_EMPLOYEES) {
-            throw new IllegalStateException("Max # of employees is 100. Creation failed.");
+            throw new IllegalStateException("Max # of employees is 100.");
         }
         this.position = position;
         this.payRate = payRate;
@@ -39,16 +39,21 @@ public class Employee extends Person{
         }
     }
 
-    public void processOrder(Customer customer, CashRegister register, double amount) {
-        if (customer == null || register == null) {
-            System.out.println("Error: Customer or register is null.");
+    public void processOrder(Customer customer, Inventory inventory) {
+        if (customer == null || inventory == null) {
+            System.out.println("Error: Unavailable inventory or customer.");
             return;
         }
-        if (customer.processPayment(amount)) {
-            System.out.println("Order processed successfully.");
-        } else {
-            System.out.println("Order processing failed.");
+        if (!customer.isWaitingOnOrder()) {
+            System.out.println("Error: Customer hasn't order.");
+        } 
+        
+        Order order = customer.getCurrentOrder();
+        if (order == null) {
+            System.out.println("Error: No order found.");
+            return;
         }
+        
     }
 
     public void issueRefund(Customer customer, CashRegister register, double amount) {

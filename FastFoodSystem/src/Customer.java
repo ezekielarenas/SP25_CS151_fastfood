@@ -86,4 +86,8 @@ public class Customer extends Person implements Payable{
     public Order getCurrentOrder() {
         return currentOrder;
     }
+
+    public boolean isWaitingOnOrder() {
+        return isWaitingOnOrder;
+    }
 }
