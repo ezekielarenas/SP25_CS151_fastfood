@@ -171,7 +171,6 @@ public class App {
                     default:
                         System.out.println("Invalid input");
                         break;
-
                 }
                 printUI();
             } catch (NumberFormatException e) {
