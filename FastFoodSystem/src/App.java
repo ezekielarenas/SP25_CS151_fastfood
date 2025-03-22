@@ -14,7 +14,7 @@ public class App {
     public static String getInput(String message) {
         System.out.println(message);
         String input = scanner.nextLine();
-        if(input.equals("QUIT")) {
+        if(input.equalsIgnoreCase("QUIT")) {
             System.out.println("Exiting...");
             scanner.close();
             System.exit(0);
