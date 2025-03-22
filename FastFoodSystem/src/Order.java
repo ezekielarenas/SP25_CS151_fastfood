@@ -31,11 +31,6 @@ public class Order implements Reportable {
         return total;
     }
 
-    // Record payment amount for customer order.
-    public void processPayment(double amount) {
-        this.amountPaid = amount;
-    }
-
     // Sample idea for reportable interface
     @Override
     public void generateReport() {
