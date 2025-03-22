@@ -1,3 +1,5 @@
+import menu.MenuItem;
+
 public class Employee extends Person{
     private String position;
     private double payRate;
@@ -38,22 +40,45 @@ public class Employee extends Person{
     }
 
     public void processOrder(Customer customer, CashRegister register, double amount) {
-
+        if (customer == null || register == null) {
+            System.out.println("Error: Customer or register is null.");
+            return;
+        }
+        if (customer.processPayment(amount)) {
+            System.out.println("Order processed successfully.");
+        } else {
+            System.out.println("Order processing failed.");
+        }
     }
 
     public void issueRefund(Customer customer, CashRegister register, double amount) {
-    
+        if (customer == null || register == null) {
+            System.out.println("Error: Customer or register is null.");
+            return;
+        }
+        customer.issueRefund(amount);
+        System.out.println("Refund issued successfully.");
     }
 
     public void restockItem(Inventory inventory, MenuItem item, int quantity) {
-
+        if (inventory == null || item == null) {
+            System.out.println("Error: Inventory or item is null.");
+            return;
+        }
+        inventory.addItem(item, quantity);
+        System.out.println("Item restocked successfully.");
     }
 
+    public void resetHoursWorked() {
+        hoursWorked = 0;
+        System.out.println("Hours worked reset to 0.");
+    }
 
-    // Abstract method
     @Override
     public void displayInfo() {
-        System.out.println("Name: " + name + "\nEmployeeID: " + id + "\nPosition: " + position);
+        System.out.println("Name: " + name + "\nEmployeeID: " + id + "\nPosition: " + position + "\nHours Worked: " + hoursWorked + "\nSalary: $" + calculateSalary());
     }
+
+    
 
 }
