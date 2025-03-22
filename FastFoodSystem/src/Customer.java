@@ -37,8 +37,16 @@ public class Customer extends Person implements Payable{
         registerToUse = null;
     }
 
+    @Override
     public void displayInfo() {
-        
+        String registerInfo = (registerToUse != null) ? "Yes (Register " + registerToUse.getId() + ")" : "No";
+        System.out.printf("ID: %d | Name: %s | Balance: $%.2f | Waiting on Order: %s | At Register: %s\n",
+            this.id,
+            this.getName(),
+            this.balance,
+            this.isWaitingOnOrder ? "Yes" : "No",
+            registerInfo
+        );
     }
 
     @Override

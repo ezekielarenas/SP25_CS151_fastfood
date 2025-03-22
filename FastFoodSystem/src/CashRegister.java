@@ -2,9 +2,11 @@ public class CashRegister implements Payable{
     
     private boolean inUse;
     private static double totalSales;
+    private int id;
     
-    public CashRegister() {
+    public CashRegister(int id) {
         this.inUse = false;
+        this.id = id;
     }
 
     //Will be used when customer orders food
@@ -28,6 +30,10 @@ public class CashRegister implements Payable{
 
     public boolean getInUse() {
         return inUse;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

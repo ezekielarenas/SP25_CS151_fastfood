@@ -67,7 +67,7 @@ public class App {
                         System.out.println("Error: Duplicate ID");
                         break;
                     }
-                    registerList.put(registerId, new CashRegister());
+                    registerList.put(registerId, new CashRegister(registerId));
                     break;
                 case "2":
                     int customerID = Integer.valueOf(getInput("Enter customer ID: "));
