@@ -7,6 +7,7 @@ public class Burger extends MenuItem  {
 		super.setDrinkable(false);
 	}
 
+	@Override
 	public String getName() {
 		return "Burger";
 	}

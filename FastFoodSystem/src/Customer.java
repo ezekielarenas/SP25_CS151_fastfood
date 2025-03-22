@@ -41,7 +41,7 @@ public class Customer extends Person implements Payable{
         
     }
 
-    //When customer orders food
+    @Override
     public boolean processPayment(double amount) {
         if(balance < amount) {
             System.out.println("Insufficient balance.");
@@ -52,6 +52,7 @@ public class Customer extends Person implements Payable{
         return true;
     }
 
+    @Override
     public void issueRefund(double amount) {
         System.out.println("Order refunded");
         balance += amount;

@@ -8,11 +8,13 @@ public class CashRegister implements Payable{
     }
 
     //Will be used when customer orders food
+    @Override
     public boolean processPayment(double amount) {
         totalSales += amount;
         return true;
     }
 
+    @Override
     public void issueRefund(double amount) {
         totalSales -= amount;
         if(totalSales < amount) {
