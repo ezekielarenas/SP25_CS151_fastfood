@@ -15,6 +15,13 @@ public class CashRegister implements Payable{
         objectCount++;
     }
 
+    public void displayRegisterStats() {
+        System.out.printf("ID: %d | In Use: %s\n",
+        this.id,
+        this.inUse ? "Yes" : "No"
+        );
+    }
+
     //Will be used when customer orders food
     @Override
     public boolean processPayment(double amount) {
@@ -41,5 +48,4 @@ public class CashRegister implements Payable{
     public int getId() {
         return id;
     }
-
 }

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import menu.Fry;
@@ -30,7 +31,8 @@ public class App {
             "4. Have a customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
             "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
             "6. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
-            "7. Have employee refund\n" 
+            "7. Have employee refund\n" + 
+            "8. Display customers and registers" 
         );
     }
 
@@ -148,6 +150,16 @@ public class App {
                     }
                     break;
                 case "8":
+                    System.out.println("------------Customers------------");
+                    for (Map.Entry<Integer, Customer> entry : customerList.entrySet()) {
+                        Customer customer = entry.getValue();
+                        customer.displayInfo();
+                    }
+                    System.out.println("------------Registers------------");
+                    for (Map.Entry<Integer, CashRegister> entry : registerList.entrySet()) {
+                        CashRegister register = entry.getValue();
+                        register.displayRegisterStats();
+                    }
                     break;
                 case "9":
                     break;
