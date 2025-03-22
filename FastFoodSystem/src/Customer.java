@@ -21,6 +21,8 @@ public class Customer extends Person implements Payable{
     public void useRegister(CashRegister register) {
         if(register == null) {
             System.out.println("No register exists");
+        } else if (registerToUse != null) {
+            System.out.println("Error: Use the register you're already at");
         }
         else if(!register.getInUse()) {
             register.setInUse(true);
