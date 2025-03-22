@@ -5,12 +5,19 @@ public class Employee extends Person{
     private static final int MAX_HOURS_PER_DAY = 8;
 
 
+    private static final int MAX_EMPLOYEES = 100;
+    private static int objectCount = 0;
+
     // Constructor
     public Employee(int id, String name, boolean isWorking, String position, double payRate, int hoursWorked) {
         super(name, isWorking, id);
+        if(objectCount >= MAX_EMPLOYEES) {
+            throw new IllegalStateException("Max # of employees is 100. Creation failed.");
+        }
         this.position = position;
         this.payRate = payRate;
         this.hoursWorked = hoursWorked;
+        objectCount++;
     }
 
     public double calculateSalary() {

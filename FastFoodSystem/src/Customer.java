@@ -4,11 +4,17 @@ public class Customer extends Person implements Payable{
     private double balance;
     private boolean isWaitingOnOrder; 
     private Order currentOrder;
+    private static final int MAX_CUSTOMERS = 100;
+    private static int objectCount = 0;
 
     public Customer(int id, String name, boolean isWorking, double balance) {
         super(name, isWorking, id);
+        if(objectCount >= MAX_CUSTOMERS) {
+            throw new IllegalStateException("Max # of customers is 100. Creation failed.");
+        }
         this.balance = balance;
         this.isWaitingOnOrder = false;
+        objectCount++;
     }
 
     //Customer can choose a register to use. Once in use, no other customer can use that register until the customer has placed an order
@@ -37,11 +43,19 @@ public class Customer extends Person implements Payable{
         registerToUse = null;
     }
 
+    @Override
     public void displayInfo() {
-        
+        String registerInfo = (registerToUse != null) ? "Yes (Register " + registerToUse.getId() + ")" : "No";
+        System.out.printf("ID: %d | Name: %s | Balance: $%.2f | Waiting on Order: %s | At Register: %s\n",
+            this.id,
+            this.getName(),
+            this.balance,
+            this.isWaitingOnOrder ? "Yes" : "No",
+            registerInfo
+        );
     }
 
-    //When customer orders food
+    @Override
     public boolean processPayment(double amount) {
         if(balance < amount) {
             System.out.println("Insufficient balance.");
@@ -52,6 +66,7 @@ public class Customer extends Person implements Payable{
         return true;
     }
 
+    @Override
     public void issueRefund(double amount) {
         System.out.println("Order refunded");
         balance += amount;

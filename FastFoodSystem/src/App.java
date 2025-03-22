@@ -30,12 +30,7 @@ public class App {
             "4. Have a customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
             "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
             "6. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
-            //Feel free to change these next options
-            "7. View inventory\n" 
-            // "8. View employees\n" +
-            // "9. View registers\n" +
-            // "10. View current orders\n" +
-            // "11. Restock inventory" 
+            "7. Have employee refund\n" 
         );
     }
 
@@ -67,7 +62,7 @@ public class App {
                         System.out.println("Error: Duplicate ID");
                         break;
                     }
-                    registerList.put(registerId, new CashRegister());
+                    registerList.put(registerId, new CashRegister(registerId));
                     break;
                 case "2":
                     int customerID = Integer.valueOf(getInput("Enter customer ID: "));
@@ -77,13 +72,16 @@ public class App {
                     }
                     String customerName = getInput("Enter customer name: ");
                     double customerBalance = Double.parseDouble(getInput("What is this customer's balance?: "));
-                    customerList.put(customerID, new Customer(customerID, customerName, false, customerBalance));
+                    Customer newCustomer = new Customer(customerID, customerName, false, customerBalance);
+                    customerList.put(customerID, newCustomer);
                     break;
                 case "3":
                     int selectedCustomerID = Integer.valueOf(getInput("Which customer will use a register? (Enter customer ID)"));
                     if(customerList.containsKey(selectedCustomerID)) {
-                        int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerList.get(selectedCustomerID).name + " use?:"));
-                        customerList.get(selectedCustomerID).useRegister(registerList.get(registerToBeUsedID));
+                        Customer customerToUseRegister = customerList.get(selectedCustomerID);
+                        int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerToUseRegister.getName() + " use?:"));
+                        CashRegister usedRegister = registerList.get(registerToBeUsedID);
+                        customerToUseRegister.useRegister(usedRegister);
                     } else {
                         System.out.println("Error: Invalid ID");
                     }
@@ -91,16 +89,17 @@ public class App {
                 case "4":
                     int orderingCustomerID = Integer.valueOf(getInput("Which customer will order? (Enter customer ID)"));
                     if(customerList.containsKey(orderingCustomerID) ) {
-                        if(customerList.get(orderingCustomerID).getRegister() == null) {
+                        Customer customerOrdering = customerList.get(orderingCustomerID);
+                        if(customerOrdering.getRegister() == null) {
                             System.out.println("Error: Customer is not at a register");
                             break;
                         }
-                        if(customerList.get(orderingCustomerID).getCurrentOrder() != null) {
+                        if(customerOrdering.getCurrentOrder() != null) {
                             System.out.println("A customer can only have one order at a time. Refund to make new order");
                             break;
                         }
                         printMenu();
-                        System.out.println("What will " + customerList.get(orderingCustomerID).getName() + " order? (Enter 1-3, type anything else to exit)");
+                        System.out.println("What will " + customerOrdering.getName() + " order? (Enter 1-3, type anything else to exit)");
                         Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
                         while(true) {
                             String option = getInput("Add item: ");
@@ -111,7 +110,7 @@ public class App {
                             } else if(option.equals("3")) {
                                 order.addItem(new Milkshake());
                             } else {
-                                customerList.get(orderingCustomerID).placeOrder(order);
+                                customerOrdering.placeOrder(order);
                                 break;
                             }
                         }     
@@ -133,13 +132,14 @@ public class App {
                     break;
                 case "7":
                     int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID)"));
+                    Customer refundingCustomer = customerList.get(refundCustomerID);
                     if(customerList.containsKey(refundCustomerID) ) {
-                        if(customerList.get(refundCustomerID).getRegister() == null) {
+                        if(refundingCustomer.getRegister() == null) {
                             System.out.println("Error: Customer is not at a register");
                             break;
                         }
-                        if(customerList.get(refundCustomerID).getCurrentOrder() != null) {
-                            customerList.get(refundCustomerID).issueRefund(customerList.get(refundCustomerID).getCurrentOrder().calculateTotal());
+                        if(refundingCustomer.getCurrentOrder() != null) {
+                            refundingCustomer.issueRefund(refundingCustomer.getCurrentOrder().calculateTotal());
                         } else {
                             System.out.println("Error: Customer has no order");
                         } 
