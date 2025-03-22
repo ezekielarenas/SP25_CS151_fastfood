@@ -31,6 +31,12 @@ public class Order implements Reportable {
         return total;
     }
 
+    //Get items in order
+    public List<MenuItem> getItems() {
+        return items;
+    }
+
+
     // Sample idea for reportable interface
     @Override
     public void generateReport() {

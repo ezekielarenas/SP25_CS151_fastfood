@@ -50,6 +50,8 @@ public class App {
         System.out.println("\n\n***********Fast Food Operation Simulation***********");
         printUI();
 
+
+        Inventory inventory = new Inventory();
         HashMap<Integer, Customer> customerList = new HashMap<>();
         HashMap<Integer, CashRegister> registerList = new HashMap<>();
         HashMap<Integer, Employee> employeeList = new HashMap<>();
@@ -132,6 +134,46 @@ public class App {
                         employeeList.put(employeeID, new Employee(employeeID, employeeName, true, "", 0, 0));
                         break;
                     case "6":
+                        //Get and check Employee ID
+                        int servingEmployeeID = Integer.valueOf(getInput("What is the ID of the employee who will complete this order?"));
+                        if(!employeeList.containsKey(servingEmployeeID)) {
+                            System.out.println("Error: Employee ID not found");
+                            break;
+                        }
+                        Employee servingEmployee = employeeList.get(servingEmployeeID);
+
+                        //Get and check Customer ID
+                        int servingCustomerID = Integer.valueOf(getInput("What is the ID of the customer who's order will be completed?"));
+                        if(!customerList.containsKey(servingCustomerID)) {
+                            System.out.println("Error: Customer ID not found");
+                            break;
+                        }
+                        Customer servingCustomer = customerList.get(servingCustomerID);
+
+                        //Check if Customer is waiting on order
+                        if(servingCustomer.getCurrentOrder() == null) {
+                            System.out.println("Error: Customer is not waiting on an order");
+                            break;
+                        }
+
+                        Order servingOrder = servingCustomer.getCurrentOrder();
+
+                        //Build a frequency map of items in the order
+                        Map<String, Integer> orderFrequency = new HashMap<>();
+                        for(menu.MenuItem item : servingOrder.getItems()) {
+                            String itemName = item.getName();
+
+                            //If item is already in the map, add one
+                            if(orderFrequency.containsKey(itemName)) {
+                                orderFrequency.put(itemName, orderFrequency.get(itemName) + 1);
+
+                            //If item is not in the map, add it
+                            } else {
+                                orderFrequency.put(itemName, 1);
+                            }
+                        }
+
+
                         break;
                     case "7":
                         int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID. Customer must be at register to refund)"));
