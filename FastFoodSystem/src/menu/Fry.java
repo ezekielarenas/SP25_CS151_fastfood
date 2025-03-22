@@ -10,7 +10,7 @@ public class Fry extends MenuItem {
 		super.setVegetarian(true);
 		super.setDrinkable(false);
 		if(objectCount >= MAX_FRY) {
-            throw new IllegalStateException("Max # of milkshakes is 100. Creation failed.");
+            throw new IllegalStateException("Max # of fries is 100. Creation failed.");
         }
 		objectCount++;
 	}
