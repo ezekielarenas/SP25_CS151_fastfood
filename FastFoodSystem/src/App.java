@@ -31,7 +31,7 @@ public class App {
             "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
             "6. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
             //Feel free to change these next options
-            "7. View inventory\n" 
+            "7. Have employee refund\n" 
             // "8. View employees\n" +
             // "9. View registers\n" +
             // "10. View current orders\n" +
