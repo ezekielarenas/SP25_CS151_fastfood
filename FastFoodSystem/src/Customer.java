@@ -76,6 +76,7 @@ public class Customer extends Person implements Payable{
         registerToUse.setInUse(false); 
         registerToUse = null;
         currentOrder = null;
+        this.isWaitingOnOrder = false;
     }
 
     public CashRegister getRegister() {

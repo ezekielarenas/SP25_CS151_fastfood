@@ -31,7 +31,7 @@ public class App {
             "4. Have a customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
             "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
             "6. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
-            "7. Have employee refund\n" + 
+            "7. Have customer refund\n" + 
             "8. Display customers and registers" 
         );
     }
@@ -134,7 +134,7 @@ public class App {
                     case "6":
                         break;
                     case "7":
-                        int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID)"));
+                        int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID. Customer must be at register to refund)"));
                         Customer refundingCustomer = customerList.get(refundCustomerID);
                         if(customerList.containsKey(refundCustomerID) ) {
                             if(refundingCustomer.getRegister() == null) {
