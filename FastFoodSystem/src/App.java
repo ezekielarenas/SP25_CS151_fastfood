@@ -77,13 +77,16 @@ public class App {
                     }
                     String customerName = getInput("Enter customer name: ");
                     double customerBalance = Double.parseDouble(getInput("What is this customer's balance?: "));
-                    customerList.put(customerID, new Customer(customerID, customerName, false, customerBalance));
+                    Customer newCustomer = new Customer(customerID, customerName, false, customerBalance);
+                    customerList.put(customerID, newCustomer);
                     break;
                 case "3":
                     int selectedCustomerID = Integer.valueOf(getInput("Which customer will use a register? (Enter customer ID)"));
                     if(customerList.containsKey(selectedCustomerID)) {
-                        int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerList.get(selectedCustomerID).name + " use?:"));
-                        customerList.get(selectedCustomerID).useRegister(registerList.get(registerToBeUsedID));
+                        Customer customerToUseRegister = customerList.get(selectedCustomerID);
+                        int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerToUseRegister.getName() + " use?:"));
+                        CashRegister usedRegister = registerList.get(registerToBeUsedID);
+                        customerToUseRegister.useRegister(usedRegister);
                     } else {
                         System.out.println("Error: Invalid ID");
                     }
@@ -91,16 +94,17 @@ public class App {
                 case "4":
                     int orderingCustomerID = Integer.valueOf(getInput("Which customer will order? (Enter customer ID)"));
                     if(customerList.containsKey(orderingCustomerID) ) {
-                        if(customerList.get(orderingCustomerID).getRegister() == null) {
+                        Customer customerOrdering = customerList.get(orderingCustomerID);
+                        if(customerOrdering.getRegister() == null) {
                             System.out.println("Error: Customer is not at a register");
                             break;
                         }
-                        if(customerList.get(orderingCustomerID).getCurrentOrder() != null) {
+                        if(customerOrdering.getCurrentOrder() != null) {
                             System.out.println("A customer can only have one order at a time. Refund to make new order");
                             break;
                         }
                         printMenu();
-                        System.out.println("What will " + customerList.get(orderingCustomerID).getName() + " order? (Enter 1-3, type anything else to exit)");
+                        System.out.println("What will " + customerOrdering.getName() + " order? (Enter 1-3, type anything else to exit)");
                         Order order = new Order(orderingCustomerID, customerList.get(orderingCustomerID)); //For now, orderingID will be the customerID
                         while(true) {
                             String option = getInput("Add item: ");
@@ -111,7 +115,7 @@ public class App {
                             } else if(option.equals("3")) {
                                 order.addItem(new Milkshake());
                             } else {
-                                customerList.get(orderingCustomerID).placeOrder(order);
+                                customerOrdering.placeOrder(order);
                                 break;
                             }
                         }     
@@ -133,13 +137,14 @@ public class App {
                     break;
                 case "7":
                     int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID)"));
+                    Customer refundingCustomer = customerList.get(refundCustomerID);
                     if(customerList.containsKey(refundCustomerID) ) {
-                        if(customerList.get(refundCustomerID).getRegister() == null) {
+                        if(refundingCustomer.getRegister() == null) {
                             System.out.println("Error: Customer is not at a register");
                             break;
                         }
-                        if(customerList.get(refundCustomerID).getCurrentOrder() != null) {
-                            customerList.get(refundCustomerID).issueRefund(customerList.get(refundCustomerID).getCurrentOrder().calculateTotal());
+                        if(refundingCustomer.getCurrentOrder() != null) {
+                            refundingCustomer.issueRefund(refundingCustomer.getCurrentOrder().calculateTotal());
                         } else {
                             System.out.println("Error: Customer has no order");
                         } 
