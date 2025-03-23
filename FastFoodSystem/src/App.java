@@ -86,7 +86,7 @@ public class App {
                         int selectedCustomerID = Integer.valueOf(getInput("Which customer will use a register? (Enter customer ID)"));
                         if(customerList.containsKey(selectedCustomerID)) {
                             Customer customerToUseRegister = customerList.get(selectedCustomerID);
-                            int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerToUseRegister.getName() + " use?:"));
+                            int registerToBeUsedID = Integer.valueOf(getInput("Which register will " + customerToUseRegister.getName() + " use? (Enter register ID):"));
                             CashRegister usedRegister = registerList.get(registerToBeUsedID);
                             customerToUseRegister.useRegister(usedRegister);
                         } else {
