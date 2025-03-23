@@ -7,14 +7,14 @@ public class Order implements Reportable {
     private int orderId;
     private Customer customer;
     private List<MenuItem> items;
-    private double amountPaid;
+    //private double amountPaid;
 
     //Associate an order with a customer, assign order ID, initialize items list and amountPaid.
     public Order(int orderId, Customer customer) {
         this.orderId = orderId;
         this.customer = customer;
         this.items = new ArrayList<>();
-        this.amountPaid = 0.0;
+        //this.amountPaid = 0.0;
     }
 
     // Add MenuItem to customer order.
@@ -50,7 +50,7 @@ public class Order implements Reportable {
             System.out.println("- " + item.getName() + " ($" + item.getPrice() + ")");
         }
         System.out.println("Calculated Total: $" + calculateTotal());
-        System.out.println("Amount Paid: $" + amountPaid);
+        //System.out.println("Amount Paid: $" + amountPaid);
         System.out.println("------------------------");
     }
 }
