@@ -35,11 +35,23 @@ public class Employee extends Person{
             System.out.println("Error: Cannot work more than " + MAX_HOURS_PER_DAY + " hours in a day.");
         } else {
             hoursWorked += hours;
+            this.setWorking(true);
             System.out.println(name + " has clocked in for " + hours + " hour(s). Total hours worked: " + hoursWorked);
         }
     }
 
+    public void clockOut() {
+        this.setWorking(false);
+        System.out.println(name + " has clocked out.");
+    }
+
     public void processOrder(Customer customer, Inventory inventory) {
+        // Check if order is valid
+        Order order = customer.getCurrentOrder();
+        if (order == null) {
+            System.out.println("Error: No order found.");
+            return;
+        }
         if (customer == null || inventory == null) {
             System.out.println("Error: Unavailable inventory or customer.");
             return;
@@ -48,21 +60,24 @@ public class Employee extends Person{
             System.out.println("Error: Customer hasn't order.");
         } 
         
-        Order order = customer.getCurrentOrder();
-        if (order == null) {
-            System.out.println("Error: No order found.");
-            return;
-        }
         
-    }
-
-    public void issueRefund(Customer customer, CashRegister register, double amount) {
-        if (customer == null || register == null) {
-            System.out.println("Error: Customer or register is null.");
-            return;
+        // Check stock
+        for (MenuItem item : order.getItems()) { 
+            if (!inventory.isAvailable(item, 1)) {
+                System.out.println("Error: Insufficient stock.");
+                return;
+            }
         }
-        customer.issueRefund(amount);
-        System.out.println("Refund issued successfully.");
+
+        // Reduce stock for each item in the order
+        for (MenuItem item: order.getItems()) {
+            inventory.reduceStock(item, 1);
+        }
+
+        customer.setWaitingOnOrder(false);
+        customer.setCurrentOrder(null);
+        System.out.println("Order fulfilled succesfully. Thank you! ");
+    
     }
 
     public void restockItem(Inventory inventory, MenuItem item, int quantity) {
@@ -72,6 +87,14 @@ public class Employee extends Person{
         }
         inventory.addItem(item, quantity);
         System.out.println("Item restocked successfully.");
+    }
+
+    public void checkStock(Inventory inventory) {
+        if (inventory == null) {
+            System.out.println("Error: Inventory is null.");
+            return;
+        }
+        inventory.checkStock();
     }
 
     public void resetHoursWorked() {
