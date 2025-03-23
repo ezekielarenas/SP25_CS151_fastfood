@@ -160,18 +160,9 @@ public class App {
                         Order servingOrder = servingCustomer.getCurrentOrder();
 
                         //Build a frequency map of items in the order
-                        Map<String, Integer> orderFrequency = new HashMap<>();
-                        for(menu.MenuItem item : servingOrder.getItems()) {
-                            String itemName = item.getName();
-
-                            //If item is already in the map, add one
-                            if(orderFrequency.containsKey(itemName)) {
-                                orderFrequency.put(itemName, orderFrequency.get(itemName) + 1);
-
-                            //If item is not in the map, add it
-                            } else {
-                                orderFrequency.put(itemName, 1);
-                            }
+                        Map<MenuItem, Integer> orderFrequency = new HashMap<>();
+                        for (menu.MenuItem item : servingOrder.getItems()) {
+                            orderFrequency.put(item, orderFrequency.getOrDefault(item, 0) + 1);
                         }
 
                         // Process the order
