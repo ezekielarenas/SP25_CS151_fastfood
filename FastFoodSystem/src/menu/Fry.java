@@ -14,7 +14,8 @@ public class Fry extends MenuItem {
         }
 		objectCount++;
 	}
-	
+
+	@Override
 	public String getName() {
 		return "Fry";
 	}
