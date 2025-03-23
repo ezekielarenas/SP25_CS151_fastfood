@@ -93,3 +93,8 @@ java App
 - Andrew Young
     - Implemented Order class and Reportable interface.
     - Begun implementation of the completion of customer orders and removal of their order items from inventory.
+
+##UML DIAGRAM
+
+![alt text](image.png)
+
