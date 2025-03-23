@@ -14,8 +14,7 @@ public class Milkshake extends MenuItem {
         }
 		objectCount++;
 	}
-
-	@Override
+	
 	public String getName() {
 		return "Milkshake";
 	}
