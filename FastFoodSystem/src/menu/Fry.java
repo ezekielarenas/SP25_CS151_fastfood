@@ -14,10 +14,14 @@ public class Fry extends MenuItem {
         }
 		objectCount++;
 	}
-
-	@Override
+	
 	public String getName() {
 		return "Fry";
+	}
+	@Override
+	public String toString() {
+		return super.toString() +"\nName: " +getName();
+
 	}
 
 }
