@@ -87,7 +87,18 @@ public class Customer extends Person implements Payable{
         return currentOrder;
     }
 
+    public void setCurrentOrder(Order order) {
+        this.currentOrder = order;
+    }
+
+    // Getter and setter for isWaitingOnOrder
     public boolean isWaitingOnOrder() {
         return isWaitingOnOrder;
     }
+
+    public void setWaitingOnOrder(boolean waitingOnOrder) {
+        this.isWaitingOnOrder = waitingOnOrder;
+    }
+
+    
 }
