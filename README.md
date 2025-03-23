@@ -87,3 +87,5 @@ java App
 - Ezekiel Arenas
     - Implemented the Employee and Inventory classes.
     - Added functionalities for employees to serve customers, restock inventory, and manage their working hours.
+- Arya More
+    - Implemented the MenuItem, Burger, Fry, and Milkshake classes.
