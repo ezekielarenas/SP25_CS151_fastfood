@@ -2,9 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import menu.Fry;
-import menu.Milkshake;
-import menu.Burger;
+import menu.*;
 
 public class App {
 
@@ -29,10 +27,14 @@ public class App {
             "2. Have a customer enter the store\n" + //(Creating a customer object)
             "3. Have a customer go to a register\n" + //A customer must be at a register before being able to order
             "4. Have a customer order\n" + //Once the order is done, an employee will be assigned to a customer. If there is no employee, the operation fails.
-            "5. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
-            "6. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
-            "7. Have customer refund\n" + 
-            "8. Display customers and registers" 
+            "5. Have an employee serve a customer\n" +  //If inventory stock is insufficient, the operation fails
+            "6. Have customer refund\n" + 
+            "7. Display customers and registers\n" +
+            "8. Check stock\n" +
+            "9. Restock\n" +
+            "10. Have an employee clock in\n" + //User will be asked to enter employee details (Creating an employee object)
+            "11. Have an employee clock out\n" + 
+            "12. Get employee paycheck\n" 
         );
     }
 
@@ -124,16 +126,8 @@ public class App {
                             System.out.println("Error: Invalid ID");
                         }
                         break;
+                        
                     case "5":
-                        int employeeID = Integer.valueOf(getInput("Enter employee ID: "));
-                        if(employeeList.containsKey(employeeID)) {
-                            System.out.println("Error: Duplicate ID");
-                            break;
-                        }
-                        String employeeName = getInput("Enter employee name: ");
-                        employeeList.put(employeeID, new Employee(employeeID, employeeName, true, "", 0, 0));
-                        break;
-                    case "6":
                         //Get and check Employee ID
                         int servingEmployeeID = Integer.valueOf(getInput("What is the ID of the employee who will complete this order?"));
                         if(!employeeList.containsKey(servingEmployeeID)) {
@@ -141,6 +135,12 @@ public class App {
                             break;
                         }
                         Employee servingEmployee = employeeList.get(servingEmployeeID);
+
+                        if (!servingEmployee.isWorking()) {
+                            System.out.println("Error: Employee - " + servingEmployee.getName() + "not clocked in.");
+                            break;
+                        }
+                        
 
                         //Get and check Customer ID
                         int servingCustomerID = Integer.valueOf(getInput("What is the ID of the customer who's order will be completed?"));
@@ -155,7 +155,8 @@ public class App {
                             System.out.println("Error: Customer is not waiting on an order");
                             break;
                         }
-
+                        
+                        
                         Order servingOrder = servingCustomer.getCurrentOrder();
 
                         //Build a frequency map of items in the order
@@ -173,9 +174,11 @@ public class App {
                             }
                         }
 
-
+                        // Process the order
+                        servingEmployee.processOrder(servingCustomer, inventory);
                         break;
-                    case "7":
+
+                    case "6":
                         int refundCustomerID = Integer.valueOf(getInput("Which customer will be refunding? (Enter customer ID. Customer must be at register to refund)"));
                         Customer refundingCustomer = customerList.get(refundCustomerID);
                         if(customerList.containsKey(refundCustomerID) ) {
@@ -192,7 +195,7 @@ public class App {
                             System.out.println("Error: Invalid ID");
                         }
                         break;
-                    case "8":
+                    case "7":
                         System.out.println("------------Customers------------");
                         for (Map.Entry<Integer, Customer> entry : customerList.entrySet()) {
                             Customer customer = entry.getValue();
@@ -204,12 +207,89 @@ public class App {
                             register.displayRegisterStats();
                         }
                         break;
+                    case "8":
+                        int checkStockEmployeeID = Integer.valueOf(getInput("What is the ID of the employee who will check the stock?"));
+                        if (!employeeList.containsKey(checkStockEmployeeID)) {
+                            System.out.println("Error: Employee ID not found");
+                            break;
+                        }
+                        Employee checkStockEmployee = employeeList.get(checkStockEmployeeID);
+                        checkStockEmployee.checkStock(inventory);
+                        break;
                     case "9":
+                        int restockEmployeeID = Integer.valueOf(getInput("What is the ID of the employee who will restock the inventory?"));
+                        if (!employeeList.containsKey(restockEmployeeID)) {
+                            System.out.println("Error: Employee ID not found");
+                            break;
+                        }
+                        Employee restockEmployee = employeeList.get(restockEmployeeID);
+
+                        printMenu();
+                        String itemChoice = getInput("Enter the number of the item to restock:");
+                        MenuItem itemToRestock = null;
+                        switch (itemChoice) {
+                            case "1":
+                                itemToRestock = new Burger();
+                                break;
+                            case "2":
+                                itemToRestock = new Fry();
+                                break;
+                            case "3":
+                                itemToRestock = new Milkshake();
+                                break;
+                            default:
+                                System.out.println("Error: Invalid item choice.");
+                                break;
+                        }
+
+                        if (itemToRestock != null) {
+                            int quantity = Integer.valueOf(getInput("Enter the quantity to restock:"));
+                            if (quantity <= 0) {
+                                System.out.println("Error: Quantity must be a positive number.");
+                                break;
+                            }
+                            restockEmployee.restockItem(inventory, itemToRestock, quantity);
+                        }
                         break;
+                        
                     case "10":
+                        int employeeID = Integer.valueOf(getInput("Enter employee ID: "));
+                        if(employeeList.containsKey(employeeID)) {
+                            System.out.println("Error: Duplicate ID");
+                            break;
+                        }
+                        String employeeName = getInput("Enter employee name: ");
+                        employeeList.put(employeeID, new Employee(employeeID, employeeName, true, "", 10, 0));
+                        Employee clockInEmployee = employeeList.get(employeeID);
+                        int hours = Integer.valueOf(getInput("Enter the number of hours to clock in:"));
+                        clockInEmployee.clockIn(hours);
+    
                         break;
+
                     case "11":
+                        int clockOutEmployeeID = Integer.valueOf(getInput("What is the ID of the employee who will clock out?"));
+                        if (!employeeList.containsKey(clockOutEmployeeID)) {
+                            System.out.println("Error: Employee ID not found");
+                            break;
+                        }
+                        Employee clockOutEmployee = employeeList.get(clockOutEmployeeID);
+                        clockOutEmployee.clockOut();
                         break;
+
+                    case "12":
+                        int paycheckEmployeeID = Integer.valueOf(getInput("What is the ID of the employee who will get their paycheck?"));
+                        if (!employeeList.containsKey(paycheckEmployeeID)) {
+                            System.out.println("Error: Employee ID not found");
+                            break;
+                        }
+                        Employee paycheckEmployee = employeeList.get(paycheckEmployeeID);
+                        if (paycheckEmployee.isWorking()) {
+                            System.out.println("Error: Employee " + paycheckEmployee.getName() + " has not clocked out yet. Please clock out before retrieving paycheck.");
+                        } else {
+                            System.out.println("Paycheck for " + paycheckEmployee.getName() + ": $" + paycheckEmployee.calculateSalary());
+                        }
+                        break;
+
                     default:
                         System.out.println("Invalid input");
                         break;

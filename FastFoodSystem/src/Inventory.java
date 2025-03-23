@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-
 import menu.*;
 
 public class Inventory implements Reportable{
