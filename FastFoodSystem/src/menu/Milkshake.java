@@ -19,4 +19,9 @@ public class Milkshake extends MenuItem {
 	public String getName() {
 		return "Milkshake";
 	}
+	@Override
+	public String toString() {
+		return super.toString() +"\nName: " +getName();
+
+	}
 }
