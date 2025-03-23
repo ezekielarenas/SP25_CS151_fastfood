@@ -25,5 +25,17 @@ public abstract class MenuItem {
 	public void setDrinkable(boolean drinkable) {
 		Drinkable = drinkable;
 	}
+	@Override
+	public String toString() {
+		return "Price: " +Price +"\nVegetarian: " +Vegetarian + "\nDrinkability: " +Drinkable;
+	}
+
+	@Override
+	public boolean equals(Object a) {
+		if (toString() == a.toString()){
+			return true;
+		}
+		return false;
+	}
 
 }
