@@ -14,7 +14,8 @@ public class Burger extends MenuItem  {
         }
 		objectCount++;
 	}
-
+	
+	@Override
 	public String getName() {
 		return "Burger";
 	}
