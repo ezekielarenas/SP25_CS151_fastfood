@@ -137,7 +137,7 @@ public class App {
                         Employee servingEmployee = employeeList.get(servingEmployeeID);
 
                         if (!servingEmployee.isWorking()) {
-                            System.out.println("Error: Employee - " + servingEmployee.getName() + "not clocked in.");
+                            System.out.println("Error: Employee - " + servingEmployee.getName() + " not clocked in.");
                             break;
                         }
                         
