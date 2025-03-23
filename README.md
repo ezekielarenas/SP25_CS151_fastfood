@@ -50,6 +50,7 @@ java App
     - If a customer already has an order and goes to a register to make another one, they will be prompted to refund their original order
         - They will still be at the register until refunding is done
 
+
 5. **Have employee serve customer**
     - Choose option 5 to have an employee fulfill a customer's order. The employee checks inventory stock and processes the order
 
