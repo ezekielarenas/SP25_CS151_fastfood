@@ -96,5 +96,5 @@ java App
 
 ## UML DIAGRAM
 
-![alt text](image-2.png)
+![alt text](UML.png)
 
